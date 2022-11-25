@@ -542,8 +542,21 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  const myMap = new Map(); // создаёт коллекцию.
+  array.map((value) => {
+    const myMapValue = valueSelector(value); // получаю город
+    const key = keySelector(value); // получаю страну
+    if (myMap.has(key)) { // возвращает true, если ключ key присутствует в коллекции, иначе false
+      myMap.get(key).push(myMapValue);// возвращает значение по ключу или undefined,
+      // если ключ key отсутствует(пушу значение города)
+    } else {
+      myMap.set(key, [myMapValue]);//  записывает по ключу key значение myMapValue,
+      // если страна еще не записана
+    }
+    return value;
+  });
+  return myMap;
 }
 
 
